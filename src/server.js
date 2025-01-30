@@ -3,6 +3,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+import lighthouse from 'lighthouse';
+import * as chromeLauncher from 'chrome-launcher';
 
 dotenv.config();
 
@@ -59,3 +61,11 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+(async () => {
+  const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+  const options = {logLevel: 'info', output: 'html', onlyCategories: ['accessibility'], port: chrome.port};
+  const runnerResult = await lighthouse('https://google.com', options);
+  console.log(runnerResult.lhr.categories.accessibility.score);
+  await chrome.kill();
+})();
