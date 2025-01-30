@@ -21,7 +21,7 @@ const users = [
 ];
 
 // WAVE API Integration
-async function evaluateAccessibility(url, reportType = 2) {
+async function evaluateAccessibility(url, reportType = 1) {
   try {
     const waveUrl = `${process.env.WAVE_API_URL}?key=${process.env.WAVE_API_KEY}&url=${encodeURIComponent(url)}&reporttype=${reportType}`;
     const response = await fetch(waveUrl);
