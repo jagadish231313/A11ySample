@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 const port = 3000;
-let wUrls = [];
+let wUrls = ["https://www.ada.gov", "https://www.ada.gov/topics/"];
 
 // Create an HTTP server using the Express app
 const server = http.createServer(app);
@@ -90,7 +90,7 @@ server.listen(port, () => {
 });
 
 // WebSocket connection handler
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
   console.log('Client connected');
   console.log('waveUrlsS3: ', wUrls)
 
@@ -126,6 +126,10 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected');
   });
+
+  ws.on('run', (res) => {
+    console.log('running new url:', res)
+  })
 
   // Handle WebSocket errors
   ws.on('error', (error) => {
