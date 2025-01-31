@@ -92,14 +92,6 @@ server.listen(port, () => {
 // WebSocket connection handler
 wss.on('connection', (ws) => {
   console.log('Client connected');
-
-  // Array of URLs to fetch data from
-  const urls = [
-    'https://jsonplaceholder.typicode.com/posts/1',
-    'https://jsonplaceholder.typicode.com/posts/2',
-    'https://jsonplaceholder.typicode.com/posts/3',
-  ];
-
   console.log('waveUrlsS3: ', wUrls)
 
   const waveUrls =  wUrls.map(mappedUrl => `${process.env.WAVE_API_URL}?key=${process.env.WAVE_API_KEY}&url=${encodeURIComponent(mappedUrl)}&reporttype=${process.env.REPORT_TYPE}`);
