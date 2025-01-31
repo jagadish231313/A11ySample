@@ -144,8 +144,8 @@ wss.on('connection', (ws) => {
 
 // Configure AWS SDK
 AWS.config.update({
-  accessKeyId: 'AKIAYSE4OKWT7XAKIMCJ', // Replace with your access key
-  secretAccessKey: 'igItmaylPmPpkhOf6mHWBN2vIs8zIE7J6uVbOiVx', // Replace with your secret key
+  accessKeyId: process.env.ACCESSKEYID, // Replace with your access key
+  secretAccessKey: process.env.SECRETACCESSKEY, // Replace with your secret key
   region: 'us-east-2', // Replace with your bucket's region (e.g., 'us-east-1')
 });
 
