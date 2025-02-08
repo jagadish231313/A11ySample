@@ -127,10 +127,13 @@ wss.on('connection', (ws, req) => {
     console.log('Client disconnected');
   });
 
-  ws.on('run', (res) => {
+  setTimeout(() => {
+    ws.send('ws sample resend testmessages after an interval ');
+  }, 10000)
+
+  ws.on('onmessage', (res) => {
     console.log('running new url:', res)
   })
-
   // Handle WebSocket errors
   ws.on('error', (error) => {
     console.error('WebSocket error:', error);
