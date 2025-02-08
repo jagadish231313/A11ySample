@@ -8,6 +8,8 @@ import { WebSocketServer } from 'ws';
 import http from 'http';
 import AWS from 'aws-sdk';
 
+import puppeteer from 'puppeteer';
+
 dotenv.config();
 
 const app = express();
@@ -43,6 +45,24 @@ async function evaluateAccessibility(url, reportType = 3) {
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the API' });
 });
+
+app.get('/th', async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto("https://www.ssa.gov/", { waitUntil: 'domcontentloaded' });
+  const base64 = await page.screenshot({
+    encoding: 'base64',
+    fullPage: false,
+    clip: {             // Optional: define the area to capture
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 600,
+    },
+  });
+  await browser.close();
+  return res.json({base64});
+})
 
 // WAVE Accessibility endpoint
 app.post('/api/accessibility/evaluate', async (req, res) => {
